@@ -222,6 +222,12 @@ app.get("/admin", async (req, res) => {
 
   res.render("users", { users });
 });
+app.get("/chat", (req, res) => {
+  const number = req.query.number;
+  if (!number) return res.redirect("/admin");
+
+  res.redirect(`/chat/91${number}`);
+});
 
 
 app.get("/chat/:number", async (req, res) => {

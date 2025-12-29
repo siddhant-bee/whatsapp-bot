@@ -129,3 +129,87 @@ body {
   color: #9ca3af;
   margin-top: 2px;
 }
+
+/* Start Chat Box */
+.start-chat-box {
+  margin-bottom: 15px;
+}
+
+.start-chat-box textarea {
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  resize: none;
+  outline: none;
+  background: #f9fafb;
+}
+
+.start-chat-box textarea:focus {
+  border-color: #25d366;
+}
+
+/* Start Chat Button */
+.start-chat-box button {
+  width: 100%;
+  margin-top: 8px;
+  padding: 12px;
+  background: #25d366;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.start-chat-box button:hover {
+  background: #1ebe5d;
+}
+
+/* Phone Input Box */
+.phone-input {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background: #f9fafb;
+  overflow: hidden;
+}
+
+.country-code {
+  padding: 12px;
+  background: #e5e7eb;
+  font-weight: bold;
+  color: #333;
+  border-right: 1px solid #ccc;
+}
+
+.phone-input input {
+  flex: 1;
+  padding: 12px;
+  border: none;
+  outline: none;
+  font-size: 14px;
+  background: transparent;
+}
+
+/* Button */
+.start-chat-box button {
+  width: 100%;
+  margin-top: 10px;
+  padding: 12px;
+  background: #25d366;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.start-chat-box button:hover {
+  background: #1ebe5d;
+}
