@@ -213,3 +213,8 @@ body {
 .start-chat-box button:hover {
   background: #1ebe5d;
 }
+.no-call {
+  pointer-events: none;
+  user-select: text;
+  color: #fff;
+}
