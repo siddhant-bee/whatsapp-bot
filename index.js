@@ -6,6 +6,7 @@ const Groq = require("groq-sdk");
 const path = require("path");
 
 const Chat = require("./models/chats");
+const User = require("./models/Users");
 
 const app = express();
 app.use(express.json());
@@ -139,30 +140,43 @@ app.post("/webhook", async (req, res) => {
   const msg = req.body?.entry?.[0]?.changes?.[0]?.value?.messages?.[0];
   if (!msg) return;
 
-  const from = msg.from;
+  const phone = msg.from;
   const text = msg.text?.body || "";
 
-  await Chat.create({ from, message: text, direction: "user" });
+  // 🔹 1. CREATE / UPDATE USER
+  const user = await User.findOneAndUpdate(
+    { phone },
+    {
+      $set: { lastMessageAt: new Date() },
+      $setOnInsert: { firstSeen: new Date() }
+    },
+    { upsert: true, new: true }
+  );
 
-  const history = await Chat.find({ from }).sort({ time: 1 });
+  // 🔹 2. SAVE MESSAGE
+  await Chat.create({
+    from: phone,
+    message: text,
+    direction: "user"
+  });
+
+  // 🔹 3. FETCH CHAT HISTORY
+  const history = await Chat.find({ from: phone })
+    .sort({ createdAt: 1 });
 
   const context = history
     .map(m => `${m.direction}: ${m.message}`)
     .join("\n");
 
-  const reply = await getGroqReply(`
-Conversation:
-${context}
+  // 🔹 4. AI REPLY
+  const reply = await getGroqReply(context);
 
-User: ${text}
-Reply politely and ask for address & time if booking.
-`);
-
+  // 🔹 5. SEND MESSAGE
   await axios.post(
     `https://graph.facebook.com/v19.0/${process.env.PHONE_NUMBER_ID}/messages`,
     {
       messaging_product: "whatsapp",
-      to: from,
+      to: phone,
       text: { body: reply }
     },
     {
@@ -173,14 +187,42 @@ Reply politely and ask for address & time if booking.
     }
   );
 
-  await Chat.create({ from, message: reply, direction: "bot" });
+  // 🔹 6. SAVE BOT MESSAGE
+  await Chat.create({
+    from: phone,
+    message: reply,
+    direction: "bot"
+  });
+
+  // 🔹 7. UPDATE USER LAST ACTIVITY AGAIN
+  await User.updateOne(
+    { phone },
+    { $set: { lastMessageAt: new Date() } }
+  );
 });
+
 
 // ---------- CRM UI ----------
 app.get("/admin", async (req, res) => {
-  const users = await Chat.distinct("from");
+  const users = await Chat.aggregate([
+    {
+      $sort: { createdAt: -1 } // newest message first
+    },
+    {
+      $group: {
+        _id: "$from",
+        lastMessage: { $first: "$message" },
+        lastTime: { $first: "$createdAt" }
+      }
+    },
+    {
+      $sort: { lastTime: -1 } // final sort
+    }
+  ]);
+
   res.render("users", { users });
 });
+
 
 app.get("/chat/:number", async (req, res) => {
   const chats = await Chat.find({ from: req.params.number }).sort({ time: 1 });

@@ -96,3 +96,36 @@ body {
   color: white;
   cursor: pointer;
 }
+
+.user {
+  padding: 12px;
+  border-radius: 10px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  background: #1f2937;
+  color: white;
+}
+
+.user:hover {
+  background: #374151;
+}
+
+.phone {
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.preview {
+  font-size: 13px;
+  color: #cbd5e1;
+  margin-top: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.time {
+  font-size: 11px;
+  color: #9ca3af;
+  margin-top: 2px;
+}
