@@ -10,29 +10,17 @@
   <div class="sidebar">
     <h2>📞 Customers</h2>
 
-    <!-- ✅ NEW TEXT AREA TO START CHAT -->
-<form action="/chat" method="GET" class="start-chat-box">
+    <% users.forEach(user => { %>
+      <div class="user" onclick="location.href='/chat/<%= user._id %>'">
+        <div class="phone no-call">
+          <%= user._id %>
+        </div>
 
-  <div class="phone-input">
-    <span class="country-code">+91</span>
-    <input
-      type="text"
-      name="number"
-      placeholder="Enter mobile number"
-      maxlength="10"
-      required
-    />
-  </div>
-
-  <button type="submit">Start Chat</button>
-</form>
-
-    <!-- Existing users -->
-   <div class="user" onclick="location.href='/chat/<%= user._id %>'">
-  <div class="phone no-call"><%= user._id %></div>
-  <div class="preview"><%= user.lastMessage || "No messages yet" %></div>
-</div>
-
+        <div class="preview">
+          <%= user.lastMessage || "No messages yet" %>
+        </div>
+      </div>
+    <% }) %>
 
   </div>
 </div>
