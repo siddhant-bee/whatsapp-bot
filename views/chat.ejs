@@ -1,0 +1,14 @@
+<h2>Chat with <%= number %></h2>
+
+<% chats.forEach(c => { %>
+  <p>
+    <b><%= c.direction === "user" ? "User" : "Bot" %>:</b>
+    <%= c.message %>
+  </p>
+<% }) %>
+
+<form method="POST" action="/reply">
+  <input type="hidden" name="to" value="<%= number %>" />
+  <input type="text" name="message" required />
+  <button>Send</button>
+</form>

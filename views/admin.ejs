@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>WhatsApp Admin</title>
+  <style>
+    body { font-family: Arial; padding: 20px; }
+    .chat { border: 1px solid #ddd; padding: 10px; margin-bottom: 10px; }
+  </style>
+</head>
+<body>
+
+<h2>📱 WhatsApp Messages</h2>
+
+<% chats.forEach(c => { %>
+  <div class="chat">
+    <strong>From:</strong> <%= c.from %><br>
+    <strong>Message:</strong> <%= c.message %><br>
+    <small><%= c.time %></small>
+  </div>
+<% }) %>
+
+</body>
+</html>
