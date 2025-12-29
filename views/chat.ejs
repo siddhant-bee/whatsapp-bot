@@ -8,13 +8,16 @@
 
 <div class="container">
 
+  <!-- Sidebar -->
   <div class="sidebar">
     <div class="user" onclick="location.href='/admin'">
       ⬅ Back
     </div>
   </div>
 
+  <!-- Chat Area -->
   <div class="chat-area">
+
     <div class="chat-header">
       Chat with <%= number %>
     </div>
@@ -22,18 +25,27 @@
     <div class="chat-body">
       <% chats.forEach(c => { %>
         <div class="msg <%= c.direction === 'user' ? 'user-msg' : 'bot-msg' %>">
-          <%= c.message %>
+          <div><%= c.message %></div>
+          <small>
+            <%= new Date(c.createdAt).toLocaleString("en-IN", {
+              timeZone: "Asia/Kolkata",
+              hour: "2-digit",
+              minute: "2-digit",
+              hour12: true
+            }) %>
+          </small>
         </div>
       <% }) %>
     </div>
 
+    <!-- Input -->
     <form class="chat-footer" method="POST" action="/reply">
       <input type="hidden" name="to" value="<%= number %>">
       <input type="text" name="message" placeholder="Type a message..." required />
-      <button>➤</button>
+      <button type="submit">➤</button>
     </form>
-  </div>
 
+  </div>
 </div>
 
 </body>
