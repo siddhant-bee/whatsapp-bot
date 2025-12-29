@@ -14,9 +14,9 @@
       <div class="user" onclick="location.href='/chat/<%= user._id %>'">
         <div class="phone"><%= user._id %></div>
         <div class="preview"><%= user.lastMessage %></div>
-        <div class="time">
+        <!-- <div class="time">
           <%= new Date(user.lastTime).toLocaleTimeString() %>
-        </div>
+        </div> -->
       </div>
     <% }) %>
   </div>
