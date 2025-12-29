@@ -267,9 +267,15 @@ app.get("/chat", (req, res) => {
 
 
 app.get("/chat/:number", async (req, res) => {
-  const chats = await Chat.find({ from: req.params.number }).sort({ time: 1 });
-  res.render("chat", { chats, number: req.params.number });
+  const chats = await Chat.find({ from: req.params.number })
+    .sort({ createdAt: 1 }); // 👈 oldest → newest
+
+  res.render("chat", {
+    chats,
+    number: req.params.number
+  });
 });
+
 
 app.post("/reply", async (req, res) => {
   const { to, message } = req.body;
