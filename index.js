@@ -136,7 +136,7 @@ IMPORTANT:
 - Always move forward
 - Keep replies short and friendly
 `
-}
+},
 
 
       { role: "user", content: prompt }
