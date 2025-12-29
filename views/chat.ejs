@@ -1,14 +1,40 @@
-<h2>Chat with <%= number %></h2>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Chat</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
 
-<% chats.forEach(c => { %>
-  <p>
-    <b><%= c.direction === "user" ? "User" : "Bot" %>:</b>
-    <%= c.message %>
-  </p>
-<% }) %>
+<div class="container">
 
-<form method="POST" action="/reply">
-  <input type="hidden" name="to" value="<%= number %>" />
-  <input type="text" name="message" required />
-  <button>Send</button>
-</form>
+  <div class="sidebar">
+    <div class="user" onclick="location.href='/admin'">
+      ⬅ Back
+    </div>
+  </div>
+
+  <div class="chat-area">
+    <div class="chat-header">
+      Chat with <%= number %>
+    </div>
+
+    <div class="chat-body">
+      <% chats.forEach(c => { %>
+        <div class="msg <%= c.direction === 'user' ? 'user-msg' : 'bot-msg' %>">
+          <%= c.message %>
+        </div>
+      <% }) %>
+    </div>
+
+    <form class="chat-footer" method="POST" action="/reply">
+      <input type="hidden" name="to" value="<%= number %>">
+      <input type="text" name="message" placeholder="Type a message..." required />
+      <button>➤</button>
+    </form>
+  </div>
+
+</div>
+
+</body>
+</html>

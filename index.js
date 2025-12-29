@@ -10,6 +10,7 @@ const Chat = require("./models/chats");
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, "public")));
 
 // ---------- VIEW ENGINE ----------
 app.set("view engine", "ejs");
